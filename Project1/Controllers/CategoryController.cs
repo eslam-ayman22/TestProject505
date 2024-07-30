@@ -32,9 +32,10 @@ namespace Project1.Controllers
            var result= context.categorys.Find(id);
             return result != null ? View(result) : RedirectToAction("Notfound","Home");
         }
-        
 
-        public IActionResult saveEdit(Category category)
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
         {
             context.categorys.Update(category);
             context.SaveChanges();
