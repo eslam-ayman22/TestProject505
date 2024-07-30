@@ -1,0 +1,46 @@
+﻿<a href="/Product/createnew" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add New Product</a>
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            @foreach(var item in Model)
+            {
+                <div class="col-md-12 col-lg-4 mb-4 mb-lg-0">
+                    <div class="card">
+
+                        <a href="/Product/Detals/@item.ProductId">
+                            <img src="~/images/@item.Img"
+                             class="card-img-top" alt="Laptop" />
+                        </a>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p class="small"><a href="#!" class="text-muted">Mobile</a></p>
+                                
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="mb-0">@item.Name</h5>
+                                <h5 class="text-dark mb-0">@item.Price</h5>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                                
+                                <div class="ms-auto text-warning">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <p><a href="/Product/Edit/@item.ProductId" class="btn btn-primary">Edit</a></p>
+                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
