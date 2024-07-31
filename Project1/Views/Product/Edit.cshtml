@@ -1,4 +1,6 @@
-﻿<form action="/Product/saveEdit" method="get">
+﻿@model Product
+
+<form action="/Product/saveEdit" method="get">
     <input type="hidden" name="ProductId" value="@Model.ProductId">
     <div class="form-group">
         <label>Product Name:</label>
@@ -23,7 +25,13 @@
     </div>
     <div class="form-group">
         <label>CateogryId:</label>
-        <input type="text" class="form-control" name="CategoryId" value="@Model.CategoryId">
+       @* <input type="text" class="form-control" name="CategoryId" value="@Model.CategoryId"> *@
+        <select name="CategoryId"  class="form-select">
+            @foreach (var item in (List<Category>)ViewData["listofcategory"])
+            {
+                <option value="@item.CategoryId">@item.Name</option>
+            }
+        </select>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>

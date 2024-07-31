@@ -21,6 +21,7 @@ namespace Project1.Controllers
 
         public IActionResult createnew()
         {
+            ViewData["listofcategory"] = context.categorys.ToList();
             return View();
         }
 
@@ -33,6 +34,7 @@ namespace Project1.Controllers
 
         public IActionResult Edit(int id)
         {
+            ViewData["listofcategory"] = context.categorys.ToList();
             var result = context.products.Find(id);
             return View(result);
         }

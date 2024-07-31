@@ -1,4 +1,7 @@
-﻿<form id="editCategoryForm" action="/Category/Edit" method="post">
+﻿
+
+<h1>@ViewData["value"]</h1>
+<form id="editCategoryForm" action="/Category/Edit" method="post">
     <input type="hidden" value="@Model.CategoryId" name="CategoryId">
     <div class="mb-3">
         <label for="categoryName">Category Name:</label>

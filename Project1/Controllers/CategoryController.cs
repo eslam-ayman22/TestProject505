@@ -29,7 +29,9 @@ namespace Project1.Controllers
 
         public IActionResult Edit(int id) 
         {
-           var result= context.categorys.Find(id);
+            
+
+            var result= context.categorys.Find(id);
             return result != null ? View(result) : RedirectToAction("Notfound","Home");
         }
 

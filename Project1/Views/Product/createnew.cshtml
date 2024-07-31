@@ -22,7 +22,13 @@
     </div>
     <div class="form-group">
         <label>CateogryId:</label>
-        <input type="text" class="form-control" name="CategoryId">
+        @*<input type="text" class="form-control" name="CategoryId">*@
+        <select class="form-select" name="CategoryId">
+            @foreach (var item in (List<Category>)ViewData["listofcategory"])
+            {
+                <option value="@item.CategoryId">@item.Name</option>
+            }
+        </select>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
