@@ -10,13 +10,14 @@ namespace Project1.Controllers
         ApplicationDbContext context = new ApplicationDbContext();
         public IActionResult Index()
         {
+
            var result = context.categorys.ToList();
             return View(result);
         }
 
         public IActionResult createnew()
         {
-
+           
             return View();
         }
 
@@ -24,13 +25,14 @@ namespace Project1.Controllers
         {
             context.categorys.Add(category);
             context.SaveChanges();
-            return RedirectToAction("createnew");
+            TempData["stats"] = "Data Added Successfully";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Edit(int id) 
         {
-            
 
+            
             var result= context.categorys.Find(id);
             return result != null ? View(result) : RedirectToAction("Notfound","Home");
         }
@@ -39,9 +41,11 @@ namespace Project1.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
+           
             context.categorys.Update(category);
             context.SaveChanges();
-            return RedirectToAction("createnew");
+            TempData["stats"] = "Data Update Successfully";
+            return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int id)

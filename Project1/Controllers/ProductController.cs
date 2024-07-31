@@ -9,6 +9,7 @@ namespace Project1.Controllers
         ApplicationDbContext context = new ApplicationDbContext();
         public IActionResult Mobile()
         {
+            
             var result = context.products.Where(e => e.CategoryId == 2 );
             return View(result);
         }
@@ -21,6 +22,7 @@ namespace Project1.Controllers
 
         public IActionResult createnew()
         {
+           
             ViewData["listofcategory"] = context.categorys.ToList();
             return View();
         }
@@ -34,9 +36,12 @@ namespace Project1.Controllers
 
         public IActionResult Edit(int id)
         {
+          
+
             ViewData["listofcategory"] = context.categorys.ToList();
             var result = context.products.Find(id);
             return View(result);
+            
         }
 
         public IActionResult saveEdit(Product product)

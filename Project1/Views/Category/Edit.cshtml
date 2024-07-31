@@ -1,6 +1,6 @@
 ﻿
 
-<h1>@ViewData["value"]</h1>
+<h1>@TempData["stats"]</h1>
 <form id="editCategoryForm" action="/Category/Edit" method="post">
     <input type="hidden" value="@Model.CategoryId" name="CategoryId">
     <div class="mb-3">
