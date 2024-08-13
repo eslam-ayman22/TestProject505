@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Project1.Data;
+using Project1.Repository;
+using Project1.Repository.IRepository;
+
 namespace Project1
 {
     public class Program
@@ -9,6 +14,11 @@ namespace Project1
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(
+               option =>option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

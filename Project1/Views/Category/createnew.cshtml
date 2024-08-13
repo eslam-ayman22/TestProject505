@@ -1,50 +1,23 @@
-﻿<h1>@TempData["stats"]</h1>
-<form id="createCategoryForm" action="/Category/savenew" method="post">
+﻿@model Category
+
+<h1>@TempData["stats"]</h1>
+<form id="createCategoryForm" asp-action="createnew" asp-controller="Category" method="post">
     <div class="mb-3">
-        <label for="categoryName">Category Name:</label>
-        <input type="text" class="form-control" name="Name" id="categoryName" required>
+        <label asp-for="Name"></label>
+        <input asp-for ="Name" class="form-control"/>
+        <span asp-validation-for ="Name" class="text-danger"></span>
     </div>
     <br>
     <div class="mb-3">
-        <label for="categoryDescription">Category Description:</label>
-        <input type="text" class="form-control" name="Description" id="categoryDescription" required>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control">
+        <span asp-validation-for ="Description" class="text-danger"></span>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<!-- Submit Confirmation Modal -->
-<div class="modal fade" id="submitModal" tabindex="-1" aria-labelledby="submitModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="submitModalLabel">Confirm Submission</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to submit the category details?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" id="confirmSubmit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var form = document.getElementById('createCategoryForm');
-        var submitModal = new bootstrap.Modal(document.getElementById('submitModal'));
-        var confirmSubmitButton = document.getElementById('confirmSubmit');
-
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            submitModal.show(); // Show the confirmation modal
-        });
-
-        confirmSubmitButton.addEventListener('click', function () {
-            form.submit(); // Submit the form programmatically
-        });
-    });
-</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

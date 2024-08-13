@@ -1,0 +1,45 @@
+﻿@model Product
+
+<form asp-action="create" asp-controller="Product" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name"  class="form-control">
+        <span asp-validation-for="Name" class="text-danger" value="@Model.Name"></span>
+    </div>
+    <br>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description"  class="form-control">
+        <span asp-validation-for="Description" class="text-danger" value="@Model.Description"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Img"></label>
+        <input asp-for="Img"  class="form-control" >
+        <span asp-validation-for="Img" class="text-danger" value="@Model.Img"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" >
+        <span asp-validation-for="Price" class="text-danger" value="@Model.Price"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Rate"></label>
+        <input asp-for="Rate"  class="form-control" >
+        <span asp-validation-for="Rate" class="text-danger" value="@Model.Rate"></span>
+    </div>
+   @*  <div class="form-group">
+        <label>CateogryId:</label> *@
+        @*<input type="text" class="form-control" name="CategoryId">*@
+       @*  <select class="form-select" name="CategoryId">
+            @foreach (var item in (List<Category>)ViewData["listofcategory"])
+            {
+                <option value="@item.CategoryId">@item.Name</option>
+            }
+        </select> *@
+    <label>CateogryId:</label>
+    <select asp-for="CategoryId" asp-items="@ViewBag.listofcategory" class="form-control"></select>
+    <span asp-validation-for="CategoryId" class="text-danger"value="@Model.CategoryId"></span>
+   @*  </div> *@
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

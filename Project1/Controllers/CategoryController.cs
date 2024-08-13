@@ -1,39 +1,52 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Identity.Client;
 using Project1.Data;
 using Project1.Models;
+using Project1.Repository;
+using Project1.Repository.IRepository;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Project1.Controllers
 {
     public class CategoryController : Controller
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private  readonly ICategoryRepository categoryRepository; // new CategoryRepository();
+
+        public CategoryController(ICategoryRepository categoryRepository)
+        {
+            this.categoryRepository = categoryRepository;
+        }
         public IActionResult Index()
         {
 
-           var result = context.categorys.ToList();
+            var result = categoryRepository.GetAll();
             return View(result);
         }
 
         public IActionResult createnew()
         {
-           
-            return View();
+            Category category = new Category();
+            return View(category);
         }
 
-        public IActionResult savenew(Category category)
+        [HttpPost]
+        public IActionResult createnew(Category category)
         {
-            context.categorys.Add(category);
-            context.SaveChanges();
-            TempData["stats"] = "Data Added Successfully";
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                categoryRepository.create(category);
+                TempData["stats"] = "Data Added Successfully";
+                return RedirectToAction("Index");
+            }
+
+
+            return View(category);
         }
 
         public IActionResult Edit(int id) 
         {
-
-            
-            var result= context.categorys.Find(id);
+            var result = categoryRepository.Get(e=>e.CategoryId==id);
             return result != null ? View(result) : RedirectToAction("Notfound","Home");
         }
 
@@ -41,21 +54,21 @@ namespace Project1.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-           
-            context.categorys.Update(category);
-            context.SaveChanges();
-            TempData["stats"] = "Data Update Successfully";
-            return RedirectToAction("Index");
+
+                categoryRepository.Edit(category);
+                TempData["stats"] = "Data Update Successfully";
+                return RedirectToAction("Index");
+            
+     
         }
 
         public IActionResult Delete(int id)
         {
-            var result = context.categorys.Find(id);
+            var result = categoryRepository.Get(e=>e.CategoryId==id).FirstOrDefault();
 
             if(result != null)
             {
-                context.categorys.Remove(result);
-                context.SaveChanges();
+                categoryRepository.delete(result);
                 return RedirectToAction("Index");
             }
             else

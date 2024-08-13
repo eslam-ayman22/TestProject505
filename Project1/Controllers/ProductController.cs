@@ -1,64 +1,87 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Project1.Data;
 using Project1.Models;
+using Project1.Repository.IRepository;
 
 namespace Project1.Controllers
 {
     public class ProductController : Controller
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+
+        private readonly IProductRepository productRepository;
+        private readonly ICategoryRepository categoryRepository;
+
+        public ProductController(IProductRepository productRepository , ICategoryRepository categoryRepository)
+        {
+            this.productRepository = productRepository;
+            this.categoryRepository = categoryRepository;
+        }
+
+       
         public IActionResult Mobile()
         {
-            
-            var result = context.products.Where(e => e.CategoryId == 2 );
+
+            //var result = context.products.include("Category").Where(e => e.CategoryId == 2 );
+            var result = productRepository.Get(e => e.CategoryId == 2, "Category");
             return View(result);
         }
 
         public IActionResult Detals(int Id)
         {
-            var result = context.products.Find(Id);
+            var result = productRepository.Get(e => e.ProductId == Id).FirstOrDefault();
             return View(result);
         }
 
-        public IActionResult createnew()
+        public IActionResult create()
         {
-           
-            ViewData["listofcategory"] = context.categorys.ToList();
-            return View();
+            Product product = new Product();
+            ViewData["listofcategory"] = categoryRepository.GetAll().Select(e => new
+            SelectListItem(e.Name, e.CategoryId.ToString()));
+            return View(product);
         }
 
-        public IActionResult savenew(Product product)
+        [HttpPost]
+        public IActionResult create(Product product)
         {
-            context.products.Add(product);
-            context.SaveChanges();
-            return RedirectToAction("createnew");
+            if (ModelState.IsValid)
+            {
+                productRepository.create(product);
+                productRepository.commit();
+                return RedirectToAction("createnew");
+            }
+
+            ViewData["listofcategory"] = productRepository.GetAll();
+            return View(product);
         }
 
         public IActionResult Edit(int id)
         {
-          
 
-            ViewData["listofcategory"] = context.categorys.ToList();
-            var result = context.products.Find(id);
+
+            ViewData["listofcategory"] = categoryRepository.GetAll();
+            var result = productRepository.Get(e => e.ProductId == id).FirstOrDefault();
             return View(result);
-            
+
         }
 
-        public IActionResult saveEdit(Product product)
+        [HttpPost]
+        public IActionResult Edit(Product product)
         {
-            context.products.Update(product);
-            context.SaveChanges();
+            productRepository.Edit(product);
+            productRepository.commit();
+
             return RedirectToAction("createnew");
         }
 
         public IActionResult Delete (int id)
         {
-            var result = context.products.Find(id);
+            var result = productRepository.Get(e => e.ProductId == id).FirstOrDefault();
 
             if(result != null)
             {
-                context.products.Remove(result);
-                context.SaveChanges();
+                productRepository.delete(result);
+                productRepository.commit();
                 return RedirectToAction("Mobile");
             }
             else

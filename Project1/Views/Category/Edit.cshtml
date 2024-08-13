@@ -1,16 +1,16 @@
-﻿
+﻿@model Category
 
 <h1>@TempData["stats"]</h1>
-<form id="editCategoryForm" action="/Category/Edit" method="post">
+<form id="editCategoryForm" asp-action="Edit" asp-controller="Category" method="post">
     <input type="hidden" value="@Model.CategoryId" name="CategoryId">
     <div class="mb-3">
-        <label for="categoryName">Category Name:</label>
-        <input type="text" class="form-control" name="Name" id="categoryName" value="@Model.Name" required>
+        <label asp-for="Name"></label>
+        <input asp-for="Name"  class="form-control">
     </div>
     <br>
     <div class="mb-3">
-        <label for="categoryDescription">Category Description:</label>
-        <input type="text" class="form-control" value="@Model.Description" name="Description" id="categoryDescription" required>
+        <label asp-for="Description"></label>
+        <input asp-for="Description"  class="form-control">
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -51,3 +51,5 @@
         });
     });
 </script>
+
+

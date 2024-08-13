@@ -19,7 +19,7 @@
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td>
-                        <a href="/Category/Edit/@item.CategoryId" class="btn btn-warning">Edit</a>
+                        <a asp-action="Edit" asp-controller="Category"  asp-route-id="@item.CategoryId" class="btn btn-warning">Edit</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@item.CategoryId">Delete</button>
                     </td>
                 </tr>

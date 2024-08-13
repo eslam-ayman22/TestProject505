@@ -7,7 +7,20 @@ namespace Project1.Data
     {
            public DbSet<Models.Product> products  { get; set; }
            public DbSet<Models.Category> categorys { get; set; }
-           protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+           public DbSet<Models.Company> companys { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+       : base(options)
+        {
+        }
+
+        public ApplicationDbContext()
+        {
+            
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
